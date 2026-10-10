@@ -387,4 +387,22 @@ public class MarksDAO {
 
         return result.toString();
     }
+    // 9. Update existing marks
+    public static boolean updateMarks(int studentId, int subjectId, int marks)
+            throws SQLException {
+
+        String sql = "UPDATE marks SET marks = ? WHERE studentId = ? AND subjectId = ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, marks);
+            ps.setInt(2, studentId);
+            ps.setInt(3, subjectId);
+
+            int rows = ps.executeUpdate();
+
+            return rows > 0;
+        }
+    }
 }
